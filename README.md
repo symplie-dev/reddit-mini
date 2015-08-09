@@ -9,31 +9,13 @@ Resources:
 
 ### Dev Setup
 
-1. Clone the project
-    ```bash
-    git clone <url>
-    ```
-2. Once in the project root. Install NPM dependencies
-    ```bash
-    npm install
-    ```
-3. If you are on OS X run the following command (or add it to your `.bash_profile`) to prevent gulp errors
-    ```bash
-    ulimit -n 2560
-    ```
+1. Clone the project `git clone <url>`
+2. Once in the project root. Install NPM dependencies `npm install`
+3. If you are on OS X run the following command (or add it to your `.bash_profile`) to prevent gulp errors `ulimit -n 2560`
     - see [Issue 431](https://github.com/substack/node-browserify/issues/431)
-3. Compile LESS
-    ```bash
-    gulp less
-    ```
-4. Compile React to JavaScript
-    ```bash
-    gulp js
-    ```
-5. Watch for changes to your LESS and JS
-    ```bash
-    gulp
-    ```
+3. Compile LESS `gulp less`
+4. Compile React to JavaScript `gulp js`
+5. Watch for changes to your LESS and JS `gulp`
 
 
 ### Dev Deployment

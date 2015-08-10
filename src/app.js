@@ -4,7 +4,9 @@
  * add top-level React components to the DOM here.
  */
 
-var React      = require('react'),
-    HelloWorld = require('./components/hello-world');
+var React    = require('react'),
+    Heading  = require('./components/heading'),
+    PostList = require('./components/post-list');
 
-React.render(<HelloWorld />, document.getElementById('helloWorldContainer'));
+React.render(<Heading />, document.getElementById('headingContainer'));
+React.render(<PostList />, document.getElementById('postListContainer'));

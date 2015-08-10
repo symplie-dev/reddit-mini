@@ -1,0 +1,61 @@
+header {
+  background: rgba(255,255,255,0.95);
+  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  height: 45px;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 3;
+}
+
+.subreddit-input {
+  height: 44px;
+  letter-spacing: .1em;
+  margin: 0 60px;
+  position: relative;
+  
+  .subreddit-lbl {
+    color: @gray3;
+    display: inline-block;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    height: 24px;
+    left: 0;
+    line-height: 24px;
+    padding: 10px 0 0 0;
+    position: absolute;
+    top: 0;
+    z-index: 4;
+  }
+  
+  .subreddit-input-inner {
+    background: red;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 3;
+    
+    input {
+      border: none;
+      border-bottom: 1px solid #ddd;
+      box-sizing: border-box;
+      color: #111;
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      height: 36px;
+      letter-spacing: .05em;
+      outline: none;
+      padding: 10px 2px 1px 20px;
+      transition: border 0.2s linear, padding 0.2s linear;
+      width: 100%;
+      
+      &:focus, &:active {
+        outline: none;
+        border-bottom: 2px solid @blue;
+        padding: 10px 2px 0px 20px;
+      }
+    }
+  }
+}

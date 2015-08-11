@@ -13,7 +13,8 @@
     "128": "img/icon128.png"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "http://www.reddit.com/*"
   ],
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }

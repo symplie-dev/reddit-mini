@@ -7,6 +7,7 @@ var assign         = require('object-assign'),
     Dispatcher     = require('../dispatcher'),
     PostsConstants = require('../constants/posts'),
     PostsActions   = require('../actions/posts'),
+    SettingsStore  = require('./settings'),
     _storeData     = {},
     PostsStore;
 
@@ -55,8 +56,9 @@ PostsStore = assign({}, EventEmitter.prototype, {
 PostsStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
     case PostsConstants.ActionTypes.REFRESH_POSTS:
-      _refreshPostsFromSubreddit();
-      PostsStore.emitChange();
+      _refreshPostsFromSubreddit().then(function () {
+        PostsStore.emitChange();
+      });
       break;
     case PostsConstants.ActionTypes.SET_SUBREDDIT:
       _setSubreddit(action.subreddit);
@@ -74,7 +76,8 @@ PostsStore.dispatchToken = Dispatcher.register(function(action) {
 function _refreshPostsFromSubreddit() {
   var url = [PostsConstants.REDDIT_POST_API_PREFIX
             ,_storeData.subreddit
-            ,PostsConstants.REDDIT_POST_API_POSTFIX].join(''),
+            ,PostsConstants.REDDIT_POST_API_POSTFIX
+            ,SettingsStore.getSettings().numPosts].join(''),
       deferred = Q.defer();
       
   $.get(url).done(function (res) {

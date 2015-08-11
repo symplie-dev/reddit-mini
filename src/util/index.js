@@ -4,8 +4,6 @@ var Util = {
         diff = now - time,
         diffStr = '0 seconds';
     
-    console.log(diff)
-    
     if (diff < 60) {
       diffStr = diff + ' second';
       diffStr += ((diff > 1) ? 's' : '');

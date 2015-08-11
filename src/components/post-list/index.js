@@ -1,6 +1,7 @@
-var React      = require('react'),
-    Post       = require('./post'),
-    PostsStore = require('../../stores/posts'),
+var React         = require('react'),
+    Post          = require('./post'),
+    PostsStore    = require('../../stores/posts'),
+    SettingsStore = require('../../stores/settings'),
     PostList;
 
 PostList = React.createClass({
@@ -13,10 +14,12 @@ PostList = React.createClass({
   componentDidMount: function () {
     PostsStore.init();
     PostsStore.addChangeListener(this._handlePostsChange);
+    SettingsStore.addChangeListener(this._handlePostsChange);
   },
 
   componentWillUnmount: function () {
     PostsStore.removeChangeListener(this._handlePostsChange);
+    SettingsStore.addChangeListener(this._handlePostsChange);
   },
   
   render: function () {

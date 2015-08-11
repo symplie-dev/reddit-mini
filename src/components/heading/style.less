@@ -8,12 +8,29 @@ header {
   top: 0;
   width: 100%;
   z-index: 3;
+  
+  .heading-btn {
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: 4;
+    
+    .octicon {
+      color: @gray1;
+      cursor: pointer;
+      font-size: 22px;
+      padding: 10px;
+      transition: color .2s linear;
+      
+      &:hover { color: @blue; }
+    }
+  }
 }
 
 .subreddit-input {
   height: 44px;
   letter-spacing: .1em;
-  margin: 0 60px;
+  margin: 0 80px;
   position: relative;
   
   .subreddit-lbl {
@@ -28,6 +45,23 @@ header {
     position: absolute;
     top: 0;
     z-index: 4;
+  }
+  
+  .subreddit-input-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 4;
+    
+    .octicon {
+      color: @gray1;
+      cursor: pointer;
+      font-size: 22px;
+      padding: 10px 0 0 0;
+      transition: color .2s linear;
+      
+      &:hover { color: @blue; }
+    }
   }
   
   .subreddit-input-inner {
@@ -47,7 +81,7 @@ header {
       height: 36px;
       letter-spacing: .05em;
       outline: none;
-      padding: 10px 2px 1px 20px;
+      padding: 10px 20px 1px 20px;
       transition: border 0.2s linear, padding 0.2s linear;
       width: 100%;
       

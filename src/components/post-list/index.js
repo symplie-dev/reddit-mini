@@ -23,10 +23,11 @@ PostList = React.createClass({
   },
   
   render: function () {
-    var posts = [];
+    var posts = [],
+        showImages = SettingsStore.getSettings().showImages;
     
     this.state.posts.forEach(function (item, index) {
-      posts.push(<li key={ index }><Post content={ item.data } index={ index } /></li>);
+      posts.push(<li key={ index }><Post content={ item.data } index={ index } showImages={ showImages } /></li>);
     });
     
     return (

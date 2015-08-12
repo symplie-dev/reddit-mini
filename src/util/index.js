@@ -28,6 +28,12 @@ var Util = {
     return diffStr;
   },
   
+  extractDomain: function (urlStr) {
+    var url = new URL(urlStr);
+    
+    return url.host;
+  },
+  
   getShortPrettyStr: function (str, len) {
     var short = str;
     
@@ -36,6 +42,35 @@ var Util = {
     }
     
     return short;
+  },
+  
+  getPreviewImgUrl: function (post) {
+    var url    = post.url,
+        domain = Util.extractDomain(url),
+        ext    = url.split('.').pop(),
+        source;
+    
+    if ((domain === 'i.imgur.com' || domain === 'imgur.com') && ['jpg', 'png', 'gif'].indexOf(ext.toLowerCase()) >= 0) {
+      source = url;
+    } else if (domain === 'i.imgur.com' || domain === 'imgur.com') {
+      if (ext === 'gifv') {
+        source = url.replace('.gifv', '') + '.gif';
+      } else if (/(\?gallery$)/.test(url) && post.preview && post.preview.images &&
+          post.preview.images[0] && post.preview.images[0].source &&
+          post.preview.images[0].source.url) {
+        source = post.preview.images[0].source.url;
+      } else {
+        source = url + '.jpg';
+      }
+    } else if (['jpg', 'png', 'gif'].indexOf(ext.toLowerCase()) >= 0) {
+      source = url;
+    } else if (post.preview && post.preview.images &&
+        post.preview.images[0] && post.preview.images[0].source &&
+        post.preview.images[0].source.url) {
+      source = post.preview.images[0].source.url;
+    }
+    
+    return source;
   }
 };
 

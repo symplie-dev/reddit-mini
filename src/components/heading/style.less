@@ -7,13 +7,12 @@ header {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 3;
+  z-index: 10;
   
   .heading-btn {
-    left: 0;
     position: absolute;
     top: 0;
-    z-index: 4;
+    z-index: 11;
     
     .octicon {
       color: @gray1;
@@ -25,9 +24,13 @@ header {
       &:hover { color: @blue; }
     }
   }
+  
+  .heading-btn-left { left: 0; }
+  .heading-btn-right { right: 0; }
 }
 
 .subreddit-input {
+  background: none;
   height: 44px;
   letter-spacing: .1em;
   margin: 0 80px;
@@ -44,34 +47,18 @@ header {
     padding: 10px 0 0 0;
     position: absolute;
     top: 0;
-    z-index: 4;
-  }
-  
-  .subreddit-input-btn {
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 4;
-    
-    .octicon {
-      color: @gray1;
-      cursor: pointer;
-      font-size: 22px;
-      padding: 10px 0 0 0;
-      transition: color .2s linear;
-      
-      &:hover { color: @blue; }
-    }
+    z-index: 11;
   }
   
   .subreddit-input-inner {
-    background: red;
+    background: none;
     position: absolute;
     top: 0;
     width: 100%;
-    z-index: 3;
+    z-index: 10;
     
     input {
+      background: none;
       border: none;
       border-bottom: 1px solid #ddd;
       box-sizing: border-box;

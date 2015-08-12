@@ -2,6 +2,7 @@ var React          = require('react'),
     SubredditInput = require('./subreddit-input'),
     SettingsModal  = require('../modal/settings'),
     PostsStore     = require('../../stores/posts'),
+    PostsActions   = require('../../actions/posts'),
     Heading;
 
 Heading = React.createClass({
@@ -22,10 +23,13 @@ Heading = React.createClass({
   render: function () {
     return (
       <header>
-        <span className='heading-btn'>
-          <span className='octicon octicon-gear' onClick={this._showSettingsModal}></span>
+        <span className='heading-btn heading-btn-left'>
+          <span className='octicon octicon-gear' onClick={ this._showSettingsModal }></span>
         </span>
-        <SubredditInput subreddit={this.state.subreddit} />
+        <SubredditInput subreddit={ this.state.subreddit } />
+        <span className='heading-btn heading-btn-right'>
+          <span className='octicon octicon-sync' onClick={ this._handleRefreshPosts }></span>
+        </span>
       </header>
     );
   },
@@ -40,7 +44,11 @@ Heading = React.createClass({
    
    _showSettingsModal: function () {
      React.render(<SettingsModal />, document.getElementById('settingsModalContainer'));
-   }
+   },
+  
+  _handleRefreshPosts: function () {
+    PostsActions.refreshPosts();
+  }
 });
 
 module.exports = Heading;

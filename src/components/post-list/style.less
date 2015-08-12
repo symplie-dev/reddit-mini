@@ -83,5 +83,46 @@
         background: @gray7;
       }
     }
+    
+    .post-image {
+      border-top: 1px solid @gray6;
+      overflow: hidden;
+      position: relative;
+      z-index: 3;
+      
+      img {
+        box-shadow: inset 1px 4px 9px -6px;
+        width: 100%;   
+      }
+      
+      img.gif-preview {
+        cursor: pointer;
+      }
+      
+      .gif-play-btn {
+        bottom: 0;
+        cursor: pointer;
+        left: 0;
+        position: absolute;
+        padding: 10px;
+        z-index: 4;
+        
+        .octicon {
+          color: #fff;
+          font-size: 40px;
+          opacity: 0.75;
+          transition: opacity 0.2 linear;
+        }
+      }
+      
+      &:hover {
+        .gif-play-btn {
+          .octicon {
+            color: #fff;
+            opacity: 1.0
+          }
+        }
+      }
+    }
   }
 }

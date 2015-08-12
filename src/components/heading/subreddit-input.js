@@ -17,9 +17,6 @@ SubredditInput = React.createClass({
           <input type='text' placeholder='subreddit'
             defaultValue={ this.props.subreddit } onKeyUp={ this._handleSubredditChange } />
         </div>
-        <span className='subreddit-input-btn'>
-          <span className='octicon octicon-chevron-right' onClick={ this._handleRefreshPosts }></span>
-        </span>
       </div>
     );
   },
@@ -27,11 +24,11 @@ SubredditInput = React.createClass({
   /* Private functions
    --------------------------------------------------------------------------*/
   _handleSubredditChange: function (evt) {
-    PostsActions.setSubreddit(evt.target.value);
-  },
-  
-  _handleRefreshPosts: function () {
-    PostsActions.refreshPosts();
+    if (evt.keyCode == 13) {
+      PostsActions.refreshPosts();
+    } else {
+      PostsActions.setSubreddit(evt.target.value);
+    }
   }
 });
 

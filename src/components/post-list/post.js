@@ -1,15 +1,32 @@
-var React = require('react'),
-    Util  = require('../../util'),
+var React     = require('react'),
+    Util      = require('../../util'),
+    PostImage = require('./post-image'),
     Post;
 
 Post = React.createClass({
   propTypes: {
     content: React.PropTypes.object.isRequired,
-    index: React.PropTypes.number.isRequired
+    index: React.PropTypes.number.isRequired,
+    showImages: React.PropTypes.bool.isRequired
   },
   
   render: function () {
-    var timePassed = Util.getReadableTimePassed(this.props.content.created_utc);
+    var timePassed = Util.getReadableTimePassed(this.props.content.created_utc),
+        source     = Util.getPreviewImgUrl(this.props.content),
+        preview,
+        img;
+    
+    if (this.props.content.preview && this.props.content.preview.images &&
+        this.props.content.preview.images[0] && this.props.content.preview.images[0].source &&
+        this.props.content.preview.images[0].source.url) {
+      preview = this.props.content.preview.images[0].source.url;
+    }
+        
+    if (this.props.showImages && source && preview) {
+      img = <PostImage preview={preview} source={ source } />;
+    }
+    
+    
     
     return (
       <div className='post-item'>
@@ -24,9 +41,10 @@ Post = React.createClass({
             </span>
           </div>
         </a>
-        <a className='comments-link' href= {'http://www.reddit.com' + this.props.content.permalink}>
+        <a className='comments-link' href= {'http://www.reddit.com' + this.props.content.permalink }>
           <span className='octicon octicon-comment-discussion'></span>
         </a>
+        { img }
       </div>
     );
   }

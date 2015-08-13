@@ -2,7 +2,7 @@
 
 _A Chrome extension for quickly checking subreddits_
 
-Reddit Top Ten is avaialable in the Chrome Web Store [here](https://chrome.google.com/webstore/detail/reddit-top-ten/ihidociaebcooecnmjogmepbkhpgkick)
+Reddit Top Ten is available in the Chrome Web Store [here](https://chrome.google.com/webstore/detail/reddit-top-ten/ihidociaebcooecnmjogmepbkhpgkick)
 
 ![Reddit In Action](https://github.com/symplie-dev/reddit-top-ten/blob/master/web-store-resources/reddit-top-ten-in-action.gif)
 

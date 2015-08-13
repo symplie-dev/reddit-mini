@@ -35,12 +35,18 @@ PostImage = React.createClass({
         
         playBtn = (
           <div className='play-media-btn' onClick={ this._toggleMediaState }>
-            <span className='octicon octicon-eye'></span>
+            <span className='octicon octicon-eye' onClick={ this._toggleMediaState }></span>
           </div>
         );
       } else { // Media is playing
         img = (
-          <img src={ this.props.source } />
+          <img src={ this.props.source } onClick={ this._toggleMediaState } />
+        );
+        
+        playBtn = (
+          <div className='play-media-btn' onClick={ this._toggleMediaState }>
+            <span className='octicon octicon-primitive-square' onClick={ this._toggleMediaState }></span>
+          </div>
         );
       }
     } else if (this.props.type === 'VIDEO') { // Gifv image
@@ -50,8 +56,8 @@ PostImage = React.createClass({
         );
         
         playBtn = (
-          <div className='play-media-btn'>
-            <span className='octicon octicon-eye'></span>
+          <div className='play-media-btn' onClick={ this._toggleMediaState }>
+            <span className='octicon octicon-eye' onClick={ this._toggleMediaState }></span>
           </div>
         );
       } else {  // Media is playing
@@ -60,6 +66,12 @@ PostImage = React.createClass({
             <source src={ this.props.source } type='video/webm' />
             <source src={ this.props.source2 } type='video/mp4' />
           </video>
+        );
+        
+        playBtn = (
+          <div className='play-media-btn' onClick={ this._toggleMediaState }>
+            <span className='octicon octicon-primitive-square' onClick={ this._toggleMediaState }></span>
+          </div>
         );
       }
     }
@@ -75,8 +87,10 @@ PostImage = React.createClass({
   
   /* private Functions
   ---------------------------------------------------------------------------*/
-  _toggleMediaState: function () {
+  _toggleMediaState: function (evt) {
     var playing = !this.state.playingMedia;
+    
+    evt.stopPropagation();
     
     this.setState({
       playingMedia: playing

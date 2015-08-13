@@ -1,11 +1,6 @@
-# EXTN
+# Reddit Top Ten
 
-_Boilerplate skeleton for a React-powered Chrome extension_
-
-Resources:
-* [React](http://facebook.github.io/react/)
-* [Flux](https://facebook.github.io/flux/)
-* [Chrome extensions](https://developer.chrome.com/extensions/getstarted)
+_A Chrome extension for quickly checking subreddits_
 
 ### Dev Setup
 

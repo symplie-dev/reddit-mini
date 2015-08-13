@@ -2,6 +2,9 @@
 
 _A Chrome extension for quickly checking subreddits_
 
+
+![Reddit In Action](https://github.com/symplie-dev/reddit-top-ten/blob/master/web-store-resources/reddit-top-ten-in-action.gif)
+
 ### Dev Setup
 
 1. Clone the project `git clone <url>`

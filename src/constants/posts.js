@@ -5,7 +5,7 @@ var PostsConstants = {
     REFRESH_POSTS: 'REFRESH_POSTS',
     SET_SUBREDDIT: 'SET_SUBREDDIT'
   },
-  REDDIT_POST_API_PREFIX: 'http://www.reddit.com/r/',
+  REDDIT_POST_API_PREFIX: 'https://www.reddit.com/r/',
   REDDIT_POST_API_POSTFIX: '/hot.json?limit='
 }
 

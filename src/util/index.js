@@ -52,7 +52,7 @@ var Util = {
         mediaMeta     = {};
         
     if (post.domain === 'imgur.com' || post.domain === 'i.imgur.com') {
-      if (galleryRegEx1.test(post.url) || galleryRegEx2.text(post.url)) { // if it contains /a/ or /gallery/ it's a gallery
+      if (galleryRegEx1.test(post.url) || galleryRegEx2.test(post.url)) { // if it contains /a/ or /gallery/ it's a gallery
         mediaMeta.type = 'GALLERY';
         if (Util.postHasPreview(post)) {
           mediaMeta.previewSource = post.preview.images[0].source.url;

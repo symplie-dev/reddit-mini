@@ -24,10 +24,15 @@ PostList = React.createClass({
   
   render: function () {
     var posts = [],
-        showImages = SettingsStore.getSettings().showImages;
+        showImages = SettingsStore.getSettings().showImages,
+        autoExpandNsfw = SettingsStore.getSettings().autoExpandNsfw;
     
     this.state.posts.forEach(function (item, index) {
-      posts.push(<li key={ index }><Post content={ item.data } index={ index } showImages={ showImages } /></li>);
+      posts.push(
+        <li key={ index }>
+          <Post content={ item.data } index={ index } showImages={ showImages } autoExpandNsfw={ autoExpandNsfw } />
+        </li>
+      );
     });
     
     return (

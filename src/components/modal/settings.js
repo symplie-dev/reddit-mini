@@ -63,7 +63,13 @@ SettingsModal = React.createClass({
                   <div className='modal-body-row'>
                     <div className='modal-body-lbl'>Expand images</div>
                     <div className='modal-body-val'>
-                      <input type='checkbox' defaultChecked={this.state.tmpSettings.showImages} onChange={this._handleCheckChange} />
+                      <input type='checkbox' defaultChecked={this.state.tmpSettings.showImages} onChange={this._handleShowImagesChange} />
+                    </div>
+                  </div>
+                  <div className='modal-body-row'>
+                    <div className='modal-body-lbl'>Expand <span className='nsfw-tag'>NSFW</span> images</div>
+                    <div className='modal-body-val'>
+                      <input type='checkbox' defaultChecked={this.state.tmpSettings.autoExpandNsfw} onChange={this._handleShowNsfwChange} />
                     </div>
                   </div>
                 </div>
@@ -86,10 +92,19 @@ SettingsModal = React.createClass({
     });
   },
   
-  _handleCheckChange: function (evt) {
+  _handleShowImagesChange: function (evt) {
     var tmpSettings = this.state.tmpSettings;
     
     tmpSettings.showImages = evt.target.checked;
+    this.setState({
+      tmpSettings: tmpSettings
+    });
+  },
+  
+  _handleShowNsfwChange: function (evt) {
+    var tmpSettings = this.state.tmpSettings;
+    
+    tmpSettings.autoExpandNsfw = evt.target.checked;
     this.setState({
       tmpSettings: tmpSettings
     });

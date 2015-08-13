@@ -7,26 +7,24 @@ Post = React.createClass({
   propTypes: {
     content: React.PropTypes.object.isRequired,
     index: React.PropTypes.number.isRequired,
-    showImages: React.PropTypes.bool.isRequired
+    showImages: React.PropTypes.bool.isRequired,
+    autoExpandNsfw: React.PropTypes.bool.isRequired
   },
   
   render: function () {
     var timePassed = Util.getReadableTimePassed(this.props.content.created_utc),
-        source     = Util.getPreviewImgUrl(this.props.content),
-        preview,
+        media      = Util.getMedia(this.props.content),
+        nsfw,
         img;
-    
-    if (this.props.content.preview && this.props.content.preview.images &&
-        this.props.content.preview.images[0] && this.props.content.preview.images[0].source &&
-        this.props.content.preview.images[0].source.url) {
-      preview = this.props.content.preview.images[0].source.url;
-    }
-        
-    if (this.props.showImages && source && preview) {
-      img = <PostImage preview={preview} source={ source } />;
+    if (this.props.showImages && media.type && (this.props.autoExpandNsfw || !this.props.content.over_18)) {
+      img = (
+        <PostImage type={media.type} previewSource={ media.previewSource } source={ media.source } source2={ media.source2 } />
+      );
     }
     
-    
+    if (this.props.content.over_18) {
+      nsfw = (<span className='nsfw-tag'>NSFW</span>);
+    }
     
     return (
       <div className='post-item'>
@@ -34,6 +32,7 @@ Post = React.createClass({
           <div className='post-item-number'>{ this.props.index + 1 }</div>
           <div className='post'>
             <div className='post-title'>{ this.props.content.title }</div>
+            { nsfw }
             <div className='post-url'>{ Util.getShortPrettyStr(this.props.content.url, 45) }</div>
             <span className='post-meta'>
               <span className='meta-part'>{ this.props.content.score } points by { this.props.content.author }&nbsp;</span>

@@ -6,7 +6,8 @@ var SettingsConstants = {
   },
   DEFAULT_SETTINGS: {
     numPosts:   10,
-    showImages: true
+    showImages: true,
+    autoExpandNsfw: false
   }
 }
 

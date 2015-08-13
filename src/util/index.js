@@ -44,33 +44,59 @@ var Util = {
     return short;
   },
   
-  getPreviewImgUrl: function (post) {
-    var url    = post.url,
-        domain = Util.extractDomain(url),
-        ext    = url.split('.').pop(),
-        source;
-    
-    if ((domain === 'i.imgur.com' || domain === 'imgur.com') && ['jpg', 'png', 'gif'].indexOf(ext.toLowerCase()) >= 0) {
-      source = url;
-    } else if (domain === 'i.imgur.com' || domain === 'imgur.com') {
-      if (ext === 'gifv') {
-        source = url.replace('.gifv', '') + '.gif';
-      } else if (/(\?gallery$)/.test(url) && post.preview && post.preview.images &&
-          post.preview.images[0] && post.preview.images[0].source &&
-          post.preview.images[0].source.url) {
-        source = post.preview.images[0].source.url;
-      } else {
-        source = url + '.jpg';
+  getMedia: function (post) {
+    var galleryRegEx1 = /\/a\//gmi,
+        galleryRegEx2 = /\/gallery\//gmi,
+        pathArray     = post.url.split('.'),
+        ext           = pathArray.pop().toLowerCase(),
+        mediaMeta     = {};
+        
+    if (post.domain === 'imgur.com' || post.domain === 'i.imgur.com') {
+      if (galleryRegEx1.test(post.url) || galleryRegEx2.text(post.url)) { // if it contains /a/ or /gallery/ it's a gallery
+        mediaMeta.type = 'GALLERY';
+        if (Util.postHasPreview(post)) {
+          mediaMeta.previewSource = post.preview.images[0].source.url;
+        }
+      } else if (ext === 'gifv') { 							              // .gifv given we a video tag + preview
+        mediaMeta.type = 'VIDEO';
+        mediaMeta.source = pathArray.join('.') + '.webm';
+        mediaMeta.source2 = pathArray.join('.') + '.mp4';
+        if (Util.postHasPreview(post)) {
+          mediaMeta.previewSource = post.preview.images[0].source.url;
+        }
+      } else if (ext === 'gif') {								               // Plain gif given we need a preview
+        mediaMeta.type = 'IMAGE';
+        mediaMeta.source = post.url;
+        if (Util.postHasPreview(post)) {
+          mediaMeta.previewSource = post.preview.images[0].source.url;
+        }
+      } else if (['jpg', 'jpeg', 'png'].indexOf(ext) >= 0) {	// Plain image given
+        mediaMeta.type = 'IMAGE';
+        mediaMeta.source = post.url;
+      } else {												                        // Image needs a file extension
+        mediaMeta.type = 'IMAGE';
+        mediaMeta.source = post.url + '.jpg';
       }
-    } else if (['jpg', 'png', 'gif'].indexOf(ext.toLowerCase()) >= 0) {
-      source = url;
-    } else if (post.preview && post.preview.images &&
-        post.preview.images[0] && post.preview.images[0].source &&
-        post.preview.images[0].source.url) {
-      source = post.preview.images[0].source.url;
+    } else if (ext === 'gif') {									              // Plain gif given we need a preview
+    mediaMeta.type = 'IMAGE';
+      mediaMeta.source = post.url;
+      if (Util.postHasPreview(post)) {
+          mediaMeta.previewSource = post.preview.images[0].source.url;
+      }
+    } else if (['jpg', 'jpeg', 'png'].indexOf(ext) >= 0) {		// Plain image given (not imgur)
+      mediaMeta.type = 'IMAGE';
+        mediaMeta.source = post.url;
+    } else {
+      // Don't show any image
     }
     
-    return source;
+    return mediaMeta;
+  },
+
+  postHasPreview: function (post) {
+    return post && post.preview && post.preview.images &&
+    	post.preview.images[0] && post.preview.images[0].source &&
+        post.preview.images[0].source.url;
   }
 };
 

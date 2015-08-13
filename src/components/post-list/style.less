@@ -30,7 +30,20 @@
         .post-title {
           color: @gray1;
           font-weight: bold;
+          padding-bottom: 2px;
           text-decoration: none;
+        }
+        
+        .nsfw-tag {
+          background: @red;
+          border-radius: 3px;
+          color: #fff;
+          cursor: default;
+          font-family: Helvetica, Arial, sans-serif;
+          font-size: 11px;
+          font-weight: bold;
+          padding: 2px 3px;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.15);
         }
         
         .post-url {
@@ -86,25 +99,24 @@
     
     .post-image {
       border-top: 1px solid @gray6;
-      overflow: hidden;
       position: relative;
       z-index: 3;
       
-      img {
-        box-shadow: inset 1px 4px 9px -6px;
+      img, video {
+        display: block;
         width: 100%;   
       }
       
-      img.gif-preview {
+      img.media-preview {
         cursor: pointer;
       }
       
-      .gif-play-btn {
-        bottom: 0;
+      .play-media-btn {
         cursor: pointer;
         left: 0;
         position: absolute;
         padding: 10px;
+        top: 0;
         z-index: 4;
         
         .octicon {
@@ -116,7 +128,7 @@
       }
       
       &:hover {
-        .gif-play-btn {
+        .play-media-btn {
           .octicon {
             color: #fff;
             opacity: 1.0

@@ -1,7 +1,7 @@
 (function () {
   window._gaq = window._gaq || [];
   
-  window._gaq.push(['_setAccount', '<ANALYTICS ID HERE!>']);
+  window._gaq.push(['_setAccount', 'UA-60232429-8']);
   window._gaq.push(['_trackPageview']);
   
   (function() {

@@ -4,7 +4,7 @@
   "name": "Reddit Top Ten",
   "short_name": "Reddit Top Ten",
   "description": "Get a quick snapshot of the top ten posts for a given subreddit",
-  "version": "0.1.0.2",
+  "version": "0.1.0.3",
   "browser_action": {
     "default_icon":"img/icon128.png",
     "default_popup": "pop-up.html"

@@ -15,11 +15,27 @@ PostList = React.createClass({
     PostsStore.init();
     PostsStore.addChangeListener(this._handlePostsChange);
     SettingsStore.addChangeListener(this._handlePostsChange);
+    setTimeout(function () {
+      document.getElementsByTagName("html")[0].style.minWidth='401px';
+      setTimeout(function () {
+        document.getElementsByTagName("html")[0].style.minWidth='400px';
+      }, 1)
+    },1);
   },
 
   componentWillUnmount: function () {
     PostsStore.removeChangeListener(this._handlePostsChange);
     SettingsStore.addChangeListener(this._handlePostsChange);
+  },
+
+  componentDidUpdate: function (prevProps, prevState) {
+    console.log('rendered')
+    setTimeout(function () {
+      document.getElementsByTagName("html")[0].style.minWidth='401px';
+      setTimeout(function () {
+        document.getElementsByTagName("html")[0].style.minWidth='400px';
+      }, 1)
+    },1);
   },
   
   render: function () {

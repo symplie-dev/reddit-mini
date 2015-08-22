@@ -36,7 +36,7 @@ SettingsModal = React.createClass({
   },
   
   handleSave: function () {
-    SettingsActions.updateSettings(this.state.tmpSettings);
+    SettingsActions.updateSettings({ settings: this.state.tmpSettings });
     this.remove();
   },
     
@@ -61,6 +61,12 @@ SettingsModal = React.createClass({
                     </div>
                   </div>
                   <div className='modal-body-row'>
+                    <div className='modal-body-lbl'>Start with last viewed subreddit</div>
+                    <div className='modal-body-val'>
+                      <input type='checkbox' defaultChecked={this.state.tmpSettings.savePreviousSub} onChange={this._handleSavePreviousSubChange} />
+                    </div>
+                  </div>
+                  <div className='modal-body-row'>
                     <div className='modal-body-lbl'>Expand images</div>
                     <div className='modal-body-val'>
                       <input type='checkbox' defaultChecked={this.state.tmpSettings.showImages} onChange={this._handleShowImagesChange} />
@@ -69,7 +75,7 @@ SettingsModal = React.createClass({
                   <div className='modal-body-row'>
                     <div className='modal-body-lbl'>Expand <span className='nsfw-tag'>NSFW</span> images</div>
                     <div className='modal-body-val'>
-                      <input type='checkbox' defaultChecked={this.state.tmpSettings.autoExpandNsfw} onChange={this._handleShowNsfwChange} />
+                      <input type='checkbox' defaultChecked={this.state.tmpSettings.showNsfwImages} onChange={this._handleShowNsfwChange} />
                     </div>
                   </div>
                 </div>
@@ -104,7 +110,7 @@ SettingsModal = React.createClass({
   _handleShowNsfwChange: function (evt) {
     var tmpSettings = this.state.tmpSettings;
     
-    tmpSettings.autoExpandNsfw = evt.target.checked;
+    tmpSettings.showNsfwImages = evt.target.checked;
     this.setState({
       tmpSettings: tmpSettings
     });
@@ -114,6 +120,15 @@ SettingsModal = React.createClass({
     var tmpSettings = this.state.tmpSettings;
     
     tmpSettings.numPosts = parseInt(evt.target.value);
+    this.setState({
+      tmpSettings: tmpSettings
+    });
+  },
+  
+  _handleSavePreviousSubChange: function (evt) {
+    var tmpSettings = this.state.tmpSettings;
+    
+    tmpSettings.savePreviousSub = evt.target.checked;
     this.setState({
       tmpSettings: tmpSettings
     });

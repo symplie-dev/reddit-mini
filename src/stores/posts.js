@@ -1,14 +1,15 @@
 'use strict';
 
-var assign         = require('object-assign'),
-    EventEmitter   = require('events').EventEmitter,
-    $              = require('jquery'),
-    Q              = require('q'),
-    Dispatcher     = require('../dispatcher'),
-    PostsConstants = require('../constants/posts'),
-    PostsActions   = require('../actions/posts'),
-    SettingsStore  = require('./settings'),
-    _storeData     = {},
+var assign          = require('object-assign'),
+    EventEmitter    = require('events').EventEmitter,
+    $               = require('jquery'),
+    Q               = require('q'),
+    Dispatcher      = require('../dispatcher'),
+    PostsConstants  = require('../constants/posts'),
+    PostsActions    = require('../actions/posts'),
+    SettingsStore   = require('./settings'),
+    SettingsActions = require('../actions/settings'),
+    _storeData      = {},
     PostsStore;
 
 _storeData = {
@@ -62,7 +63,9 @@ PostsStore.dispatchToken = Dispatcher.register(function(action) {
       break;
     case PostsConstants.ActionTypes.SET_SUBREDDIT:
       _setSubreddit(action.subreddit);
-      PostsStore.emitChange();
+      _refreshPostsFromSubreddit().then(function () {
+        PostsStore.emitChange();
+      });
       break;
     default:
       // no-op
@@ -73,7 +76,7 @@ PostsStore.dispatchToken = Dispatcher.register(function(action) {
 /* Private Functions
 -----------------------------------------------------------------------------*/
 
-function _refreshPostsFromSubreddit() {
+function _refreshPostsFromSubreddit() {  
   var url = [PostsConstants.REDDIT_POST_API_PREFIX
             ,_storeData.subreddit
             ,PostsConstants.REDDIT_POST_API_POSTFIX

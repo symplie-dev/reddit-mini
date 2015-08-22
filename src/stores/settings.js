@@ -40,24 +40,21 @@ SettingsStore = assign({}, EventEmitter.prototype, {
     Dao.getSettings().then(function (settings) {
       if (!settings) {
         Dao.setSettings(_storeData.settings).then(function () {
-          deferred.resolve();
+          deferred.resolve(settings);
         });
       } else {
         _storeData.settings = settings;
         self.emitChange();
-        deferred.resolve();
+        deferred.resolve(settings);
       }
-    }).catch(function () {
-      deferred.reject();
+    }).catch(function (err) {
+      deferred.reject(err);
     });
     
     return deferred.promise;
   }
 });
 
-SettingsStore.init().then(function () {
-  PostsActions.refreshPosts();
-});
 
 /* Register callback with Dispatcher
 -----------------------------------------------------------------------------*/
@@ -65,7 +62,7 @@ SettingsStore.init().then(function () {
 SettingsStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
     case SettingsConstants.ActionTypes.UPDATE_SETTINGS:
-      _updateSettings(action.settings).then(function () {
+      _updateSettings(action.settings, action.subreddit).then(function () {
         SettingsStore.emitChange();
         PostsActions.refreshPosts();
       });
@@ -79,9 +76,15 @@ SettingsStore.dispatchToken = Dispatcher.register(function(action) {
 /* Private Functions
 -----------------------------------------------------------------------------*/
 
-function _updateSettings(settings) {
+function _updateSettings(settings, subreddit) {
   var deferred = Q.defer(),
       self     = this;
+  
+  if (settings.savePreviousSub && subreddit) {
+    settings.previousSub = subreddit;
+  } else {
+    settings.previousSub = null;
+  }
 
   Dao.setSettings(settings).then(function () {
     _storeData.settings = settings;
@@ -97,4 +100,6 @@ function _setSubreddit(subreddit) {
   _storeData.subreddit = subreddit;
 }
 
+/* Export Module
+-----------------------------------------------------------------------------*/
 module.exports = SettingsStore;

@@ -11,8 +11,9 @@ var React             = require('react'),
 App = React.createClass({
   getInitialState: function () {
     return {
-      posts:    PostsStore.getPosts(),
-      settings: SettingsConstants.DEFAULT_SETTINGS
+      posts:      PostsStore.getPosts(),
+      postsError: PostsStore.getPostsError(),
+      settings:   SettingsConstants.DEFAULT_SETTINGS
     }
   },
   
@@ -46,7 +47,7 @@ App = React.createClass({
     return (
       <div className='app-content'>
         <Heading subreddit={ sub } savePreviousSub={ this.state.settings.savePreviousSub } />
-        <PostList posts={ this.state.posts } showImages={ this.state.settings.showImages } showNsfwImages={ this.state.settings.showNsfwImages } />
+        <PostList postsError={ this.state.postsError } posts={ this.state.posts } showImages={ this.state.settings.showImages } showNsfwImages={ this.state.settings.showNsfwImages } />
         <div id='settingsModalContainer'></div>
       </div>
     );
@@ -56,7 +57,8 @@ App = React.createClass({
   ---------------------------------------------------------------------------*/
   _handlePostsChange: function () {
     this.setState({
-      posts: PostsStore.getPosts()
+      posts:      PostsStore.getPosts(),
+      postsError: PostsStore.getPostsError()
     });
   },
   

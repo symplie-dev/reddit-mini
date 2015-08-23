@@ -7,6 +7,7 @@ var React         = require('react'),
 PostList = React.createClass({
   propTypes: {
     posts:          React.PropTypes.array.isRequired,
+    postsError:     React.PropTypes.bool.isRequired,
     showImages:     React.PropTypes.bool.isRequired,
     showNsfwImages: React.PropTypes.bool.isRequired
   },
@@ -16,7 +17,7 @@ PostList = React.createClass({
         posts,
         loading;
     
-    if (self.props.posts.length > 0) {
+    if (!self.props.postsError && self.props.posts.length > 0) {
       posts = [];
       
       this.props.posts.forEach(function (item, index) {
@@ -26,6 +27,12 @@ PostList = React.createClass({
           </li>
         );
       });
+    } else if (self.props.postsError) {
+      loading = (
+        <div className='loading-container'>
+          <span>Error loading subreddit...</span>
+        </div>
+      );
     } else {
       loading = (
         <div className='loading-container'>

@@ -14,7 +14,8 @@ var assign          = require('object-assign'),
 
 _storeData = {
   subreddit: 'all',
-  posts: []
+  posts: [],
+  error: false
 };
 
 PostsStore = assign({}, EventEmitter.prototype, {
@@ -38,6 +39,10 @@ PostsStore = assign({}, EventEmitter.prototype, {
     return _storeData.posts;
   },
   
+  getPostsError: function () {
+    return _storeData.error;
+  },
+  
   init: function () {
     var self     = this,
         deferred = Q.defer();
@@ -58,12 +63,20 @@ PostsStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
     case PostsConstants.ActionTypes.REFRESH_POSTS:
       _refreshPostsFromSubreddit().then(function () {
+        _storeData.error = false;
+        PostsStore.emitChange();
+      }).catch(function() {
+        _storeData.error = true;
         PostsStore.emitChange();
       });
       break;
     case PostsConstants.ActionTypes.SET_SUBREDDIT:
       _setSubreddit(action.subreddit);
       _refreshPostsFromSubreddit().then(function () {
+         _storeData.error = false;
+        PostsStore.emitChange();
+      }).catch(function() {
+        _storeData.error = true;
         PostsStore.emitChange();
       });
       break;
@@ -92,7 +105,7 @@ function _refreshPostsFromSubreddit() {
     }
   }).fail(function (err) {
     deferred.reject(err);
-  })
+  });
   
   return deferred.promise;
 }

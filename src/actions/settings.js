@@ -5,10 +5,11 @@ var Dispatcher        = require('../dispatcher'),
     SettingsActions;
 
 SettingsActions = {
-  updateSettings: function (settings) {
+  updateSettings: function (payload) {
     Dispatcher.dispatch({
       type:     SettingsConstants.ActionTypes.UPDATE_SETTINGS,
-      settings: settings
+      settings: payload.settings,
+      subreddit: payload.subreddit
     });
   }
 };

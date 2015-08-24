@@ -5,9 +5,11 @@ var SettingsConstants = {
     UPDATE_SETTINGS: 'UPDATE_SETTINGS'
   },
   DEFAULT_SETTINGS: {
-    numPosts:   10,
-    showImages: true,
-    autoExpandNsfw: false
+    numPosts:        10,
+    showImages:      true,
+    showNsfwImages:  false,
+    savePreviousSub: true,
+    previousSub:     null
   }
 }
 

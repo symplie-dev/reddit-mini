@@ -5,10 +5,10 @@ var React     = require('react'),
 
 Post = React.createClass({
   propTypes: {
-    content: React.PropTypes.object.isRequired,
-    index: React.PropTypes.number.isRequired,
-    showImages: React.PropTypes.bool.isRequired,
-    autoExpandNsfw: React.PropTypes.bool.isRequired
+    content:        React.PropTypes.object.isRequired,
+    index:          React.PropTypes.number.isRequired,
+    showImages:     React.PropTypes.bool.isRequired,
+    showNsfwImages: React.PropTypes.bool.isRequired
   },
   
   render: function () {
@@ -16,7 +16,8 @@ Post = React.createClass({
         media      = Util.getMedia(this.props.content),
         nsfw,
         img;
-    if (this.props.showImages && media.type && (this.props.autoExpandNsfw || !this.props.content.over_18)) {
+        
+    if (this.props.showImages && media.type && (this.props.showNsfwImages || !this.props.content.over_18)) {
       img = (
         <PostImage type={media.type} previewSource={ media.previewSource } source={ media.source } source2={ media.source2 } />
       );

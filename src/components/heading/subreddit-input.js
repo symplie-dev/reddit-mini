@@ -1,12 +1,27 @@
-var React        = require('react'),
-    PostsActions = require('../../actions/posts'),
+var React           = require('react'),
+    PostsActions    = require('../../actions/posts'),
+    SettingsActions = require('../../actions/settings'),
+    SettingsStore   = require('../../stores/settings'),
     SubredditInput;
 
 SubredditInput = React.createClass({
-  getDefaultProps: function () {
+  propTypes: {
+    initialSub:      React.PropTypes.string.isRequired,
+    savePreviousSub: React.PropTypes.bool.isRequired
+  },
+  
+  getInitialState: function () {
     return {
-      subreddit: 'all'
-    }
+      subreddit: this.props.initialSub || 'all'
+    };
+  },
+  
+  componentDidMount: function () {
+    SettingsStore.addChangeListener(this._handleSettingsChange);
+  },
+  
+  componentWillUnmount: function () {
+    SettingsStore.removeChangeListener(this._handleSettingsChange);
   },
   
   render: function () {
@@ -15,7 +30,7 @@ SubredditInput = React.createClass({
         <span className='subreddit-lbl'>/r/</span>
         <div className='subreddit-input-inner'>
           <input type='text' placeholder='subreddit'
-            defaultValue={ this.props.subreddit } onKeyUp={ this._handleSubredditChange } />
+            value={ this.state.subreddit } onKeyUp={ this._handleSubredditEnter } onChange={ this._handleSubredditChange } />
         </div>
       </div>
     );
@@ -23,11 +38,35 @@ SubredditInput = React.createClass({
   
   /* Private functions
    --------------------------------------------------------------------------*/
-  _handleSubredditChange: function (evt) {
-    if (evt.keyCode == 13) {
-      PostsActions.refreshPosts();
-    } else {
+  _handleSubredditEnter: function (evt) {
+    var settings;
+    
+    if (evt.keyCode == 13 && evt.target.value.trim() !== '') {
       PostsActions.setSubreddit(evt.target.value);
+      
+      if (this.props.savePreviousSub) {
+        settings = SettingsStore.getSettings();
+        
+        settings.previousSub = evt.target.value;
+        SettingsActions.updateSettings({
+          settings: settings,
+          subreddit: evt.target.value
+        });
+      }
+    }
+  },
+  
+  _handleSubredditChange: function (evt) {
+    this.setState({
+      subreddit: evt.target.value
+    });
+  },
+  
+  _handleSettingsChange: function () {
+    if (SettingsStore.getSettings().previousSub !== null) {
+      this.setState({
+        subreddit: SettingsStore.getSettings().previousSub
+      });
     }
   }
 });

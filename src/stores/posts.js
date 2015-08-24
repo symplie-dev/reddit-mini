@@ -1,19 +1,21 @@
 'use strict';
 
-var assign         = require('object-assign'),
-    EventEmitter   = require('events').EventEmitter,
-    $              = require('jquery'),
-    Q              = require('q'),
-    Dispatcher     = require('../dispatcher'),
-    PostsConstants = require('../constants/posts'),
-    PostsActions   = require('../actions/posts'),
-    SettingsStore  = require('./settings'),
-    _storeData     = {},
+var assign          = require('object-assign'),
+    EventEmitter    = require('events').EventEmitter,
+    $               = require('jquery'),
+    Q               = require('q'),
+    Dispatcher      = require('../dispatcher'),
+    PostsConstants  = require('../constants/posts'),
+    PostsActions    = require('../actions/posts'),
+    SettingsStore   = require('./settings'),
+    SettingsActions = require('../actions/settings'),
+    _storeData      = {},
     PostsStore;
 
 _storeData = {
   subreddit: 'all',
-  posts: []
+  posts: [],
+  error: false
 };
 
 PostsStore = assign({}, EventEmitter.prototype, {
@@ -37,6 +39,10 @@ PostsStore = assign({}, EventEmitter.prototype, {
     return _storeData.posts;
   },
   
+  getPostsError: function () {
+    return _storeData.error;
+  },
+  
   init: function () {
     var self     = this,
         deferred = Q.defer();
@@ -57,12 +63,22 @@ PostsStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
     case PostsConstants.ActionTypes.REFRESH_POSTS:
       _refreshPostsFromSubreddit().then(function () {
+        _storeData.error = false;
+        PostsStore.emitChange();
+      }).catch(function() {
+        _storeData.error = true;
         PostsStore.emitChange();
       });
       break;
     case PostsConstants.ActionTypes.SET_SUBREDDIT:
       _setSubreddit(action.subreddit);
-      PostsStore.emitChange();
+      _refreshPostsFromSubreddit().then(function () {
+         _storeData.error = false;
+        PostsStore.emitChange();
+      }).catch(function() {
+        _storeData.error = true;
+        PostsStore.emitChange();
+      });
       break;
     default:
       // no-op
@@ -73,7 +89,7 @@ PostsStore.dispatchToken = Dispatcher.register(function(action) {
 /* Private Functions
 -----------------------------------------------------------------------------*/
 
-function _refreshPostsFromSubreddit() {
+function _refreshPostsFromSubreddit() {  
   var url = [PostsConstants.REDDIT_POST_API_PREFIX
             ,_storeData.subreddit
             ,PostsConstants.REDDIT_POST_API_POSTFIX
@@ -89,7 +105,7 @@ function _refreshPostsFromSubreddit() {
     }
   }).fail(function (err) {
     deferred.reject(err);
-  })
+  });
   
   return deferred.promise;
 }

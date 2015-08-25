@@ -17,7 +17,7 @@ Post = React.createClass({
         nsfw,
         img;
         
-    if (this.props.showImages && media.type && (this.props.showNsfwImages || !this.props.content.over_18)) {
+    if (this.props.showImages && media.type && media.type !== 'GALLERY' && (this.props.showNsfwImages || !this.props.content.over_18)) {
       img = (
         <PostImage type={media.type} previewSource={ media.previewSource } source={ media.source } source2={ media.source2 } />
       );

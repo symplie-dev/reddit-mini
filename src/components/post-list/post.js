@@ -36,7 +36,7 @@ Post = React.createClass({
             { nsfw }
             <div className='post-url'>{ Util.getShortPrettyStr(this.props.content.url, 45) }</div>
             <span className='post-meta'>
-              <span className='meta-part'>{ this.props.content.score } points by { this.props.content.author }&nbsp;</span>
+              <span className='meta-part'>{ this.props.content.score } points by { this.props.content.author } to /r/{ this.props.content.subreddit }&nbsp;</span>
               <span className='meta-part'>{ timePassed } ago · { this.props.content.num_comments } comments</span>
             </span>
           </div>

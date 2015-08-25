@@ -34,8 +34,8 @@ PostImage = React.createClass({
         );
         
         playBtn = (
-          <div className='play-media-btn' onClick={ this._toggleMediaState }>
-            <span className='octicon octicon-eye' onClick={ this._toggleMediaState }></span>
+          <div className='play-media-btn' onClick={ this._toggleMediaState } title={ 'click to play' }>
+            <span className='octicon octicon-eye' onClick={ this._toggleMediaState } title={ 'click to play' }></span>
           </div>
         );
       } else { // Media is playing
@@ -44,8 +44,8 @@ PostImage = React.createClass({
         );
         
         playBtn = (
-          <div className='play-media-btn' onClick={ this._toggleMediaState }>
-            <span className='octicon octicon-primitive-square' onClick={ this._toggleMediaState }></span>
+          <div className='play-media-btn' onClick={ this._toggleMediaState } title={ 'click to stop' }>
+            <span className='octicon octicon-primitive-square' onClick={ this._toggleMediaState } title={ 'click to stop' }></span>
           </div>
         );
       }
@@ -56,8 +56,8 @@ PostImage = React.createClass({
         );
         
         playBtn = (
-          <div className='play-media-btn' onClick={ this._toggleMediaState }>
-            <span className='octicon octicon-eye' onClick={ this._toggleMediaState }></span>
+          <div className='play-media-btn' onClick={ this._toggleMediaState } title={ 'click to play' }>
+            <span className='octicon octicon-eye' onClick={ this._toggleMediaState } title={ 'click to play' }></span>
           </div>
         );
       } else {  // Media is playing
@@ -69,8 +69,8 @@ PostImage = React.createClass({
         );
         
         playBtn = (
-          <div className='play-media-btn' onClick={ this._toggleMediaState }>
-            <span className='octicon octicon-primitive-square' onClick={ this._toggleMediaState }></span>
+          <div className='play-media-btn' onClick={ this._toggleMediaState } title={ 'click to stop' }>
+            <span className='octicon octicon-primitive-square' onClick={ this._toggleMediaState } title={ 'click to stop' }></span>
           </div>
         );
       }

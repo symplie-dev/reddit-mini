@@ -1,0 +1,22 @@
+.slide-container {
+  height: 100%;
+  left: 0;
+  position: relative;
+  transition: left 0.25s ease-in-out;
+  width: 200%;
+  
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+  
+  .slide-container-panel {
+    float: left;
+    height: 100%;
+    width: 50%;
+  }
+}

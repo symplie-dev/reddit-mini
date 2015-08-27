@@ -4,6 +4,7 @@ var assign          = require('object-assign'),
     EventEmitter    = require('events').EventEmitter,
     $               = require('jquery'),
     Q               = require('q'),
+    Path            = require('path'),
     Dispatcher      = require('../dispatcher'),
     PostsConstants  = require('../constants/posts'),
     PostsActions    = require('../actions/posts'),
@@ -14,8 +15,9 @@ var assign          = require('object-assign'),
 
 _storeData = {
   subreddit: 'all',
-  posts: [],
-  error: false
+  posts:     [],
+  error:     false,
+  comments:  []
 };
 
 PostsStore = assign({}, EventEmitter.prototype, {
@@ -41,6 +43,10 @@ PostsStore = assign({}, EventEmitter.prototype, {
   
   getPostsError: function () {
     return _storeData.error;
+  },
+  
+  getComments: function () {
+    return _storeData.comments;
   },
   
   init: function () {
@@ -80,6 +86,14 @@ PostsStore.dispatchToken = Dispatcher.register(function(action) {
         PostsStore.emitChange();
       });
       break;
+    case PostsConstants.ActionTypes.REFRESH_COMMENTS:
+      _refreshComments(action.permalink, action.parent).then(function () {
+        PostsStore.emitChange();
+      }).catch(function (err) {
+        console.log(err);
+        console.log('error getting comments!')
+      });
+      break;
     default:
       // no-op
       break;
@@ -90,10 +104,10 @@ PostsStore.dispatchToken = Dispatcher.register(function(action) {
 -----------------------------------------------------------------------------*/
 
 function _refreshPostsFromSubreddit() {  
-  var url = [PostsConstants.REDDIT_POST_API_PREFIX
-            ,_storeData.subreddit
-            ,PostsConstants.REDDIT_POST_API_POSTFIX
-            ,SettingsStore.getSettings().numPosts].join(''),
+  var url      = [PostsConstants.REDDIT_POST_API_PREFIX
+                 ,_storeData.subreddit
+                 ,PostsConstants.REDDIT_POST_API_POSTFIX
+                 ,SettingsStore.getSettings().numPosts].join(''),
       deferred = Q.defer();
       
   $.get(url).done(function (res) {
@@ -104,6 +118,46 @@ function _refreshPostsFromSubreddit() {
       deferred.reject();
     }
   }).fail(function (err) {
+    deferred.reject(err);
+  });
+  
+  return deferred.promise;
+}
+
+/**
+ * Get an array of comments and their children.
+ * 
+ * @param {string} permalink The link to reddit comments
+ * @param {string} [parent]  The parent comment
+ */
+function _refreshComments(permalink, parent) {
+  var url      = [PostsConstants.REDDIT_DOMAIN
+                 ,permalink].join(''),
+      deferred = Q.defer();
+  
+  if (parent) {
+    url = Path.join(url, parent);
+  }
+  
+  url += ['.json?limit='
+         ,PostsConstants.REDDIT_COMMENTS_LIMIT
+         ,'&depth='
+         ,PostsConstants.REDDIT_COMMENTS_DEPTH].join('');
+  
+  console.log('comments url: ' + url);
+  
+  $.get(url).done(function (res) {
+    console.log(res);
+    if (res && res.length && res[1] && res[1].data && res[1].data.children) {
+      console.log('proper structure');
+      _storeData.comments = res[1].data.children;
+      deferred.resolve();
+    } else {
+      deferred.reject();
+    }
+  }).fail(function (err) {
+    console.log('something failed')
+    console.log(err);
     deferred.reject(err);
   });
   

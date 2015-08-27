@@ -1,6 +1,8 @@
-var React     = require('react'),
-    Util      = require('../../util'),
-    PostImage = require('./post-image'),
+var React                 = require('react'),
+    Util                  = require('../../util'),
+    PostImage             = require('./post-image'),
+    PostsActions          = require('../../actions/posts'),
+    SlideContainerActions = require('../../actions/slide-container'),
     Post;
 
 Post = React.createClass({
@@ -41,12 +43,19 @@ Post = React.createClass({
             </span>
           </div>
         </a>
-        <a className='comments-link' href= {'http://www.reddit.com' + this.props.content.permalink }>
+        <div className='comments-link' href= {'http://www.reddit.com' + this.props.content.permalink } onClick={ this._handleCommentsClick }>
           <span className='octicon octicon-comment-discussion'></span>
-        </a>
+        </div>
         { img }
       </div>
     );
+  },
+  
+  /* PRIVATE
+  ---------------------------------------------------------------------------*/
+  _handleCommentsClick: function () {
+    PostsActions.refreshComments({ permalink: this.props.content.permalink});
+    SlideContainerActions.slideToComments();
   }
 });
 

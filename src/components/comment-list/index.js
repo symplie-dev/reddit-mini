@@ -12,7 +12,12 @@ Comment = React.createClass({
     
   render: function () {
     var self = this,
-        children = (<CommentList comments={ this.props.comment.data.replies.data.children } permalink={ this.props.permalink } />);
+        children;
+    
+    if (this.props.comment.data && this.props.comment.data.replies &&
+        this.props.comment.data.replies.data && this.props.comment.data.replies.data.children) {
+      children = (<CommentList comments={ this.props.comment.data.replies.data.children } permalink={ this.props.permalink } />);
+    }
       
     return (
       <div className='comment-container'>

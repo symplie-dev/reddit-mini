@@ -1,9 +1,10 @@
 .slide-container {
-  height: 100%;
+  height: @popUpHeight - @headerHeight;
   left: 0;
   position: relative;
+  top: 45px;
   transition: left 0.25s ease-in-out;
-  width: 200%;
+  width: @popUpWidth * 2;
   
   &:after {
     visibility: hidden;
@@ -17,6 +18,8 @@
   .slide-container-panel {
     float: left;
     height: 100%;
-    width: 50%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: @popUpWidth;
   }
 }

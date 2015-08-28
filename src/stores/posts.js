@@ -118,7 +118,14 @@ function _refreshPostsFromSubreddit() {
       
   $.get(url).done(function (res) {
     if (res.data && res.data.children && res.data.children.length > 0) {
+      
+      // Remove the promoted posts found on some popular subreddits
+      if (res.data.children.length > SettingsStore.getSettings().numPosts) {
+        res.data.children.splice(0, 1);
+      }
+      
       _storeData.posts = res.data.children;
+      
       deferred.resolve();
     } else {
       deferred.reject();

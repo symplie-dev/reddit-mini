@@ -16,8 +16,13 @@ SlideContainer = React.createClass({
   
   render: function () {
     var containerStyle = {
-      left: this.props.slideOffset + 'px'
-    };
+          left: this.props.slideOffset + 'px'
+        },
+        permalink;
+    
+    if (this.props.post) {
+      permalink = this.props.post.permalink;
+    }
     
     return (
       <div className='slide-container' style={ containerStyle }>
@@ -25,7 +30,7 @@ SlideContainer = React.createClass({
           <PostList postsError={ this.props.postsError } posts={ this.props.posts } showImages={ this.props.showImages } showNsfwImages={ this.props.showNsfwImages } />
         </div>
         <div className='slide-container-panel comment-panel'>
-          <CommentList comments={ this.props.comments } post={ this.props.post } />
+          <CommentList comments={ this.props.comments } post={ this.props.post } permalink={ permalink } />
         </div>
       </div>
     );

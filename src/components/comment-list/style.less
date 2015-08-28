@@ -45,17 +45,17 @@
       color: #111;
       font-size: 14px;
     }
+  }
+  
+  .more-btn {
+    border: none;
+    color: @blue;
+    cursor: pointer;
+    font-size: 11px;
+    text-decoration: none;
     
-    .more-btn {
-      background: #eaeaea;
-      border: none;
-      border-radius: 4px;
-      color: #111;
-      cursor: pointer;
-      padding: 8px;
-      
-      &:hover { background: #ddd; }
-    }
+    &:hover { text-decoration: underline; }
+    
   }
 }
 
@@ -94,5 +94,18 @@
   
   .meta-row {
     padding-bottom: 5px;
+  }
+  
+  .back-to-posts-btn {
+    color: #529ecc;
+    cursor: pointer;
+    font-size: 12px;
+    
+    &:hover { text-decoration: underline; }
+    
+    .octicon {
+      font-size: 12px;
+      padding-right: 3px;
+    }
   }
 }

@@ -42,8 +42,9 @@ Comment = React.createClass({
 
 CommentList = React.createClass({
   propTypes: {
-    comments: React.PropTypes.array,
-    post:     React.PropTypes.object
+    comments:  React.PropTypes.array,
+    post:      React.PropTypes.object,
+    permalink: React.PropTypes.string
   },
   
   getDefaultProps: function () {
@@ -67,7 +68,7 @@ CommentList = React.createClass({
     } else {
       if (this.props.post) {
         commentsContext = (
-          <CommentsContext post={ this.props.post }/>
+          <CommentsContext post={ this.props.post } />
         );
       }
       
@@ -75,7 +76,7 @@ CommentList = React.createClass({
         if (comment.kind.toLowerCase() === 't1') {
           comments.push(<li key={ index }><Comment comment={ comment } permalink={ self.props.permalink } /></li>);
         } else if (comment.kind.toLowerCase() === 'more' && comment.data.count > 0) {
-        //   comments.push(<li key={ index }><MoreButton numMore={ comment.data.count } /></li>);
+          comments.push(<li key={ index }><MoreButton numMore={ comment.data.count } url={'https://reddit.com' + self.props.permalink + comment.data.parent_id } /></li>);
         }
       });
     }

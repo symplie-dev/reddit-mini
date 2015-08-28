@@ -18,7 +18,7 @@ _storeData = {
   posts:     [],
   error:     false,
   comments:  [],
-  post:      null // The post in context for the comments
+  post:      {} // The post in context for the comments
 };
 
 PostsStore = assign({}, EventEmitter.prototype, {
@@ -115,6 +115,9 @@ function _refreshPostsFromSubreddit() {
                  ,PostsConstants.REDDIT_POST_API_POSTFIX
                  ,SettingsStore.getSettings().numPosts].join(''),
       deferred = Q.defer();
+  
+  _storeData.posts = [];
+  PostsStore.emitChange();
       
   $.get(url).done(function (res) {
     if (res.data && res.data.children && res.data.children.length > 0) {
@@ -156,6 +159,9 @@ function _refreshComments(permalink, parent) {
          ,PostsConstants.REDDIT_COMMENTS_LIMIT
          ,'&depth='
          ,PostsConstants.REDDIT_COMMENTS_DEPTH].join('');
+  
+  _storeData.comments = [];
+  PostsStore.emitChange();
   
   $.get(url).done(function (res) {
     if (res && res.length && res[1] && res[1].data && res[1].data.children) {

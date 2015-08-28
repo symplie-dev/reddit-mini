@@ -10,7 +10,8 @@ SlideContainer = React.createClass({
     showImages:     React.PropTypes.bool.isRequired,
     showNsfwImages: React.PropTypes.bool.isRequired,
     slideOffset:    React.PropTypes.number.isRequired,
-    comments:       React.PropTypes.array.isRequired
+    comments:       React.PropTypes.array.isRequired,
+    post:           React.PropTypes.object
   },
   
   render: function () {
@@ -23,8 +24,8 @@ SlideContainer = React.createClass({
         <div className='slide-container-panel'>
           <PostList postsError={ this.props.postsError } posts={ this.props.posts } showImages={ this.props.showImages } showNsfwImages={ this.props.showNsfwImages } />
         </div>
-        <div className='slide-container-panel'>
-          <CommentList comments={ this.props.comments } />
+        <div className='slide-container-panel comment-panel'>
+          <CommentList comments={ this.props.comments } post={ this.props.post } />
         </div>
       </div>
     );

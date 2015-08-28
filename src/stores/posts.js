@@ -17,7 +17,8 @@ _storeData = {
   subreddit: 'all',
   posts:     [],
   error:     false,
-  comments:  []
+  comments:  [],
+  post:      null // The post in context for the comments
 };
 
 PostsStore = assign({}, EventEmitter.prototype, {
@@ -49,6 +50,10 @@ PostsStore = assign({}, EventEmitter.prototype, {
     return _storeData.comments;
   },
   
+  getPost: function () {
+    return _storeData.post;
+  },
+  
   init: function () {
     var self     = this,
         deferred = Q.defer();
@@ -72,6 +77,7 @@ PostsStore.dispatchToken = Dispatcher.register(function(action) {
         _storeData.error = false;
         PostsStore.emitChange();
       }).catch(function() {
+        console.log('error getting posts');
         _storeData.error = true;
         PostsStore.emitChange();
       });
@@ -90,8 +96,8 @@ PostsStore.dispatchToken = Dispatcher.register(function(action) {
       _refreshComments(action.permalink, action.parent).then(function () {
         PostsStore.emitChange();
       }).catch(function (err) {
-        console.log(err);
         console.log('error getting comments!')
+        console.log(err);
       });
       break;
     default:
@@ -144,20 +150,15 @@ function _refreshComments(permalink, parent) {
          ,'&depth='
          ,PostsConstants.REDDIT_COMMENTS_DEPTH].join('');
   
-  console.log('comments url: ' + url);
-  
   $.get(url).done(function (res) {
-    console.log(res);
     if (res && res.length && res[1] && res[1].data && res[1].data.children) {
-      console.log('proper structure');
       _storeData.comments = res[1].data.children;
+      _storeData.post = res[0].data.children[0].data;
       deferred.resolve();
     } else {
       deferred.reject();
     }
   }).fail(function (err) {
-    console.log('something failed')
-    console.log(err);
     deferred.reject(err);
   });
   

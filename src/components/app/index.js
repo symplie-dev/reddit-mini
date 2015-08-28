@@ -16,7 +16,8 @@ App = React.createClass({
       postsError:  PostsStore.getPostsError(),
       settings:    SettingsConstants.DEFAULT_SETTINGS,
       slideOffset: SlideContainerStore.getSlideOffset(),
-      comments:    PostsStore.getComments()
+      comments:    PostsStore.getComments(),
+      post:        PostsStore.getPost()
     }
   },
   
@@ -53,7 +54,7 @@ App = React.createClass({
       <div className='app-content'>
         <Heading subreddit={ sub } savePreviousSub={ this.state.settings.savePreviousSub } />
         <SlideContainer slideOffset={ this.state.slideOffset } postsError={ this.state.postsError }
-          posts={ this.state.posts } comments={ this.state.comments } showImages={ this.state.settings.showImages }
+          posts={ this.state.posts } comments={ this.state.comments } post={ this.state.post } showImages={ this.state.settings.showImages }
           showNsfwImages={ this.state.settings.showNsfwImages } />
         <div id='settingsModalContainer'></div>
       </div>
@@ -66,7 +67,8 @@ App = React.createClass({
     this.setState({
       posts:      PostsStore.getPosts(),
       postsError: PostsStore.getPostsError(),
-      comments:   PostsStore.getComments()
+      comments:   PostsStore.getComments(),
+      post:       PostsStore.getPost()
     });
   },
   

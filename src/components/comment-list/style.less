@@ -1,14 +1,16 @@
 .comment-container {
   border-bottom: 1px solid #ccc;
   font-family: Helvetica, Arial, sans-serif;
-  padding: 10px 0 10px 15px;
+  padding: 10px 10px 10px 15px;
   
   .comment-container {
     background-image: url('../img/comment-arrow.svg');
     background-position: 0 14px;
     background-repeat: no-repeat;
     border: none;
+    padding-right: 0;
   }
+  
   
   .comment-meta {
     font-size: 12px;
@@ -54,5 +56,43 @@
       
       &:hover { background: #ddd; }
     }
+  }
+}
+
+.comments-context {
+  background: @gray7;
+  border-bottom: 1px solid #ccc;
+  font-family: Helvetica, Arial, sans-serif;
+  padding: 10px;
+  
+  .comments-context-title {
+    color: #111;
+    font-size: 14px;
+    font-weight: bold;
+    padding-bottom: 8px;
+  }
+  
+  .comments-context-url {
+    display: block;
+    color: #606162;
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: none;
+    padding-bottom: 5px;
+    
+    &:hover { text-decoration:underline; }
+  }
+  
+  .comments-context-url.comments-url {
+    &:hover { color: #529ecc; }
+  }
+  
+  .comments-context-meta {
+    color: #606162;
+    font-size: 12px;
+  }
+  
+  .meta-row {
+    padding-bottom: 5px;
   }
 }

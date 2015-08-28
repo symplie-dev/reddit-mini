@@ -1,13 +1,15 @@
-var React      = require('react'),
-    // Comment    = require('./comment'),
-    MoreButton = require('./more-button'),
+var React           = require('react'),
+    MoreButton      = require('./more-button'),
+    CommentsContext = require('./comments-context'),
+    Util            = require('../../util'),
     Comment,
     CommentList;
 
 Comment = React.createClass({
   propTypes: {
       comment:   React.PropTypes.object.isRequired,
-      permalink: React.PropTypes.string.isRequired
+      permalink: React.PropTypes.string.isRequired,
+      post:      React.PropTypes.object
   },
     
   render: function () {
@@ -24,7 +26,7 @@ Comment = React.createClass({
         <div className='comment-meta'>
             <div className='comment-author'>{ this.props.comment.data.author }</div>
             <div className='comment-readable-time'>
-              <a href={this.props.permalink + this.props.comment.data.id}>3 hours ago</a>
+              <a href={this.props.permalink + this.props.comment.data.id}> { Util.getReadableTimePassed(this.props.comment.data.created_utc) }</a>
             </div>
         </div>
         <div className='comment-body'>
@@ -40,32 +42,53 @@ Comment = React.createClass({
 
 CommentList = React.createClass({
   propTypes: {
-    comments: React.PropTypes.array
+    comments: React.PropTypes.array,
+    post:     React.PropTypes.object
   },
   
   getDefaultProps: function () {
     return {
-      comments:  [],
-      permalink: 'http://www.reddit.com/r/Showerthoughts/comments/3ihab6/the_best_item_to_protect_you_from_sasquatch/'
+      comments:  []
     };
   },
   
   render: function () {
-    var self = this,
-        comments = [];
-      
-    this.props.comments.forEach(function (comment, index) {
-      if (comment.kind.toLowerCase() === 't1') {
-        comments.push(<li key={ index }><Comment comment={ comment } permalink={ self.props.permalink } /></li>);
-      } else if (comment.kind.toLowerCase() === 'more' && comment.data.count > 0) {
-      //   comments.push(<li key={ index }><MoreButton numMore={ comment.data.count } /></li>);
+    var self     = this,
+        comments = [],
+        commentsContext,
+        loading;
+    
+    if (this.props.comments.length < 1) {
+      loading = (
+        <div className='loading-container'>
+          <span>Loading...</span>
+        </div>
+      );
+    } else {
+      if (this.props.post) {
+        commentsContext = (
+          <CommentsContext post={ this.props.post }/>
+        );
       }
-    });
+      
+      this.props.comments.forEach(function (comment, index) {
+        if (comment.kind.toLowerCase() === 't1') {
+          comments.push(<li key={ index }><Comment comment={ comment } permalink={ self.props.permalink } /></li>);
+        } else if (comment.kind.toLowerCase() === 'more' && comment.data.count > 0) {
+        //   comments.push(<li key={ index }><MoreButton numMore={ comment.data.count } /></li>);
+        }
+      });
+    }
+    
     
     return (
-      <ul>
-        { comments }
-      </ul>
+      <div>
+        { loading }
+        { commentsContext }
+        <ul>
+          { comments }
+        </ul>
+      </div>
     );
   }
 });

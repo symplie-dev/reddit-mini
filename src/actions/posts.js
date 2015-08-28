@@ -16,6 +16,14 @@ PostsActions = {
       type:      PostsConstants.ActionTypes.SET_SUBREDDIT,
       subreddit: subreddit
     })
+  },
+  
+  refreshComments: function (payload) {
+    Dispatcher.dispatch({
+      type:      PostsConstants.ActionTypes.REFRESH_COMMENTS,
+      permalink: payload.permalink,
+      parent:    payload.parent
+    });
   }
 };
 

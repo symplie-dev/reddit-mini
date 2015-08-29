@@ -33,8 +33,8 @@
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1600"
-     inkscape:window-height="837"
+     inkscape:window-width="1829"
+     inkscape:window-height="966"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1">
@@ -54,7 +54,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -72,41 +72,37 @@
        y="372.36218"
        ry="0" />
     <g
-       id="g4163"
-       transform="matrix(0.99272653,0,0,0.99272653,-175.34498,60.039739)">
-      <g
-         transform="matrix(2.2119061,0,0,2.2119061,363.19576,-1439.9204)"
-         id="g4146">
-        <circle
-           style="fill:none;stroke:#ffffff;stroke-width:20;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path3757"
-           cx="125.14285"
-           cy="921.505"
-           r="91.375137" />
-        <path
-           style="fill:none;stroke:#ffffff;stroke-width:15.39251328;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           d="m 57.619966,980.99515 37.487223,-74.97447 74.974471,37.48723"
-           id="path3761"
-           inkscape:connector-curvature="0" />
-        <circle
-           style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:11.246171;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-           id="path3763"
-           cx="156.21196"
-           cy="936.93915"
-           r="18.743618" />
-      </g>
-      <text
-         sodipodi:linespacing="125%"
-         id="text4151"
-         y="939.21936"
-         x="312.00122"
-         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:87.5px;font-family:roboto;-inkscape-font-specification:roboto;letter-spacing:4.01999807px;fill:#ffffff"
-           y="939.21936"
-           x="312.00122"
-           id="tspan4153"
-           sodipodi:role="line">REDDIT TOP 10</tspan></text>
+       id="g4146"
+       transform="matrix(2.1958179,0,0,2.1958179,185.20909,-1369.4074)">
+      <circle
+         r="91.375137"
+         cy="921.505"
+         cx="125.14285"
+         id="path3757"
+         style="fill:none;stroke:#ffffff;stroke-width:20;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3761"
+         d="m 57.619966,980.99515 37.487223,-74.97447 74.974471,37.48723"
+         style="fill:none;stroke:#ffffff;stroke-width:15.39251328;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <circle
+         r="18.743618"
+         cy="936.93915"
+         cx="156.21196"
+         id="path3763"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:11.246171;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:39.70906067px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="189.14706"
+       y="992.42773"
+       id="text4151"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4153"
+         x="189.14706"
+         y="992.42773"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:86.86357117px;font-family:roboto;-inkscape-font-specification:roboto;letter-spacing:3.99075866px;fill:#ffffff">REDDIT MINI</tspan></text>
   </g>
 </svg>

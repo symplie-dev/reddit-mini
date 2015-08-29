@@ -1,10 +1,10 @@
-# Reddit Top Ten
+# Reddit Mini
 
 _A Chrome extension for quickly checking subreddits_
 
-Reddit Top Ten is available in the Chrome Web Store [here](https://chrome.google.com/webstore/detail/reddit-top-ten/ihidociaebcooecnmjogmepbkhpgkick)
+Reddit Mini is available in the Chrome Web Store [here](https://chrome.google.com/webstore/detail/reddit-mini/ihidociaebcooecnmjogmepbkhpgkick)
 
-![Reddit In Action](https://github.com/symplie-dev/reddit-top-ten/blob/master/web-store-resources/reddit-top-ten-in-action.gif)
+![Reddit In Action](https://github.com/symplie-dev/reddit-mini/blob/master/web-store-resources/reddit-mini-in-action.gif)
 
 ### Dev Setup
 

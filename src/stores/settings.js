@@ -7,7 +7,7 @@ var assign            = require('object-assign'),
     Dispatcher        = require('../dispatcher'),
     SettingsConstants = require('../constants/settings'),
     SettingsActions   = require('../actions/settings'),
-    PostsActions      = require('../actions/posts'),
+    RedditActions     = require('../actions/reddit'),
     Dao               = require('../dao'),
     _storeData        = {},
     SettingsStore;

@@ -1,6 +1,5 @@
 var React         = require('react'),
     Post          = require('./post'),
-    PostsStore    = require('../../stores/posts'),
     SettingsStore = require('../../stores/settings'),
     PostList;
 

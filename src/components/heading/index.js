@@ -2,8 +2,8 @@ var React          = require('react'),
     $              = require('jquery'),
     SubredditInput = require('./subreddit-input'),
     SettingsModal  = require('../modal/settings'),
-    PostsStore     = require('../../stores/posts'),
-    PostsActions   = require('../../actions/posts'),
+    RedditStore    = require('../../stores/reddit'),
+    RedditActions  = require('../../actions/reddit'),
     Heading;
 
 Heading = React.createClass({
@@ -30,7 +30,7 @@ Heading = React.createClass({
    --------------------------------------------------------------------------*/
    _handlePostsChange: function () {
      this.setState({
-       subreddit: PostsStore.getSubreddit()
+       subreddit: RedditStore.getSubreddit()
      });
    },
    
@@ -39,7 +39,7 @@ Heading = React.createClass({
    },
   
   _handleRefreshPosts: function () {
-    PostsActions.setSubreddit($('.subreddit-input-inner input').val());
+    RedditActions.setSubreddit($('.subreddit-input-inner input').val());
   }
 });
 

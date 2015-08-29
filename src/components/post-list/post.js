@@ -1,7 +1,7 @@
 var React                 = require('react'),
     Util                  = require('../../util'),
     PostImage             = require('./post-image'),
-    PostsActions          = require('../../actions/posts'),
+    RedditActions         = require('../../actions/reddit'),
     SlideContainerActions = require('../../actions/slide-container'),
     Post;
 
@@ -54,7 +54,7 @@ Post = React.createClass({
   /* PRIVATE
   ---------------------------------------------------------------------------*/
   _handleCommentsClick: function () {
-    PostsActions.refreshComments({ permalink: this.props.content.permalink});
+    RedditActions.refreshComments({ permalink: this.props.content.permalink});
     SlideContainerActions.slideToComments();
   }
 });

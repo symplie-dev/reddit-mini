@@ -9,8 +9,6 @@ CommentsContext = React.createClass({
   },
     
 	render: function () {
-    console.log(this.props.post);
-  
     return (
       <div className='comments-context'>
         <div className='comments-context-title'>{ this.props.post.title }</div>

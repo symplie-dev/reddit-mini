@@ -2,8 +2,8 @@ var React               = require('react'),
     Heading             = require('../heading'),
     SlideContainer      = require('../slide-container'),
     SettingsModal       = require('../modal/settings'),
-    PostsActions        = require('../../actions/posts'),
-    PostsStore          = require('../../stores/posts'),
+    RedditActions       = require('../../actions/reddit'),
+    RedditStore         = require('../../stores/reddit'),
     SettingsConstants   = require('../../constants/settings'),
     SettingsStore       = require('../../stores/settings'),
     SlideContainerStore = require('../../stores/slide-container'),
@@ -12,25 +12,25 @@ var React               = require('react'),
 App = React.createClass({
   getInitialState: function () {
     return {
-      posts:       PostsStore.getPosts(),
-      postsError:  PostsStore.getPostsError(),
+      posts:       RedditStore.getPosts(),
+      postsError:  RedditStore.getPostsError(),
       settings:    SettingsConstants.DEFAULT_SETTINGS,
       slideOffset: SlideContainerStore.getSlideOffset(),
-      comments:    PostsStore.getComments(),
-      post:        PostsStore.getPost()
+      comments:    RedditStore.getComments(),
+      post:        RedditStore.getPost()
     }
   },
   
   componentDidMount: function () {
-    PostsStore.addChangeListener(this._handlePostsChange);
+    RedditStore.addChangeListener(this._handlePostsChange);
     SettingsStore.addChangeListener(this._handleSettingsChange);
     SlideContainerStore.addChangeListener(this._handleSlideContainerChange);
     // Initialize Stores
     SettingsStore.init().then(function (settings) {
       if (settings && settings.savePreviousSub && settings.previousSub) {
-        PostsActions.setSubreddit(settings.previousSub);
+        RedditActions.setSubreddit(settings.previousSub);
       } else {
-        PostsActions.setSubreddit('all');
+        RedditActions.setSubreddit('all');
       }
     }).catch(function (err) {
       console.log(err);
@@ -38,7 +38,7 @@ App = React.createClass({
   },
   
   componentWillUnmount: function () {
-    PostsStore.removeChangeListener(this._handlePostsChange);
+    RedditStore.removeChangeListener(this._handlePostsChange);
     SettingsStore.removeChangeListener(this._handleSettingsChange);
     SlideContainerStore.removeChangeListener(this._handleSlideContainerChange);
   },
@@ -65,10 +65,10 @@ App = React.createClass({
   ---------------------------------------------------------------------------*/
   _handlePostsChange: function () {
     this.setState({
-      posts:      PostsStore.getPosts(),
-      postsError: PostsStore.getPostsError(),
-      comments:   PostsStore.getComments(),
-      post:       PostsStore.getPost()
+      posts:      RedditStore.getPosts(),
+      postsError: RedditStore.getPostsError(),
+      comments:   RedditStore.getComments(),
+      post:       RedditStore.getPost()
     });
   },
   

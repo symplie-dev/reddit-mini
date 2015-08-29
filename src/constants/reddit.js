@@ -1,6 +1,6 @@
 'use strict';
 
-var PostsConstants = {
+var RedditConstants = {
   ActionTypes: {
     REFRESH_POSTS:    'REFRESH_POSTS',
     SET_SUBREDDIT:    'SET_SUBREDDIT',
@@ -13,4 +13,4 @@ var PostsConstants = {
   REDDIT_COMMENTS_DEPTH:   10
 }
 
-module.exports = PostsConstants;
+module.exports = RedditConstants;

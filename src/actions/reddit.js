@@ -1,30 +1,30 @@
 'use strict';
 
 var Dispatcher     = require('../dispatcher'),
-    PostsConstants = require('../constants/posts'),
-    PostsActions;
+    RedditConstants = require('../constants/reddit'),
+    RedditActions;
 
-PostsActions = {
+RedditActions = {
   refreshPosts: function () {
     Dispatcher.dispatch({
-      type: PostsConstants.ActionTypes.REFRESH_POSTS
+      type: RedditConstants.ActionTypes.REFRESH_POSTS
     });
   },
   
   setSubreddit: function (subreddit) {
     Dispatcher.dispatch({
-      type:      PostsConstants.ActionTypes.SET_SUBREDDIT,
+      type:      RedditConstants.ActionTypes.SET_SUBREDDIT,
       subreddit: subreddit
     })
   },
   
   refreshComments: function (payload) {
     Dispatcher.dispatch({
-      type:      PostsConstants.ActionTypes.REFRESH_COMMENTS,
+      type:      RedditConstants.ActionTypes.REFRESH_COMMENTS,
       permalink: payload.permalink,
       parent:    payload.parent
     });
   }
 };
 
-module.exports = PostsActions;
+module.exports = RedditActions;

@@ -6,12 +6,12 @@ var assign          = require('object-assign'),
     Q               = require('q'),
     Path            = require('path'),
     Dispatcher      = require('../dispatcher'),
-    PostsConstants  = require('../constants/posts'),
-    PostsActions    = require('../actions/posts'),
+    RedditConstants = require('../constants/reddit'),
+    RedditActions   = require('../actions/reddit'),
     SettingsStore   = require('./settings'),
     SettingsActions = require('../actions/settings'),
     _storeData      = {},
-    PostsStore;
+    RedditStore;
 
 _storeData = {
   subreddit: 'all',
@@ -21,7 +21,7 @@ _storeData = {
   post:      {} // The post in context for the comments
 };
 
-PostsStore = assign({}, EventEmitter.prototype, {
+RedditStore = assign({}, EventEmitter.prototype, {
   emitChange: function () {
     this.emit('change');
   },
@@ -70,31 +70,31 @@ PostsStore = assign({}, EventEmitter.prototype, {
 /* Register callback with Dispatcher
 -----------------------------------------------------------------------------*/
 
-PostsStore.dispatchToken = Dispatcher.register(function(action) {
+RedditStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
-    case PostsConstants.ActionTypes.REFRESH_POSTS:
+    case RedditConstants.ActionTypes.REFRESH_POSTS:
       _refreshPostsFromSubreddit().then(function () {
         _storeData.error = false;
-        PostsStore.emitChange();
+        RedditStore.emitChange();
       }).catch(function() {
         console.log('error getting posts');
         _storeData.error = true;
-        PostsStore.emitChange();
+        RedditStore.emitChange();
       });
       break;
-    case PostsConstants.ActionTypes.SET_SUBREDDIT:
+    case RedditConstants.ActionTypes.SET_SUBREDDIT:
       _setSubreddit(action.subreddit);
       _refreshPostsFromSubreddit().then(function () {
          _storeData.error = false;
-        PostsStore.emitChange();
+        RedditStore.emitChange();
       }).catch(function() {
         _storeData.error = true;
-        PostsStore.emitChange();
+        RedditStore.emitChange();
       });
       break;
-    case PostsConstants.ActionTypes.REFRESH_COMMENTS:
+    case RedditConstants.ActionTypes.REFRESH_COMMENTS:
       _refreshComments(action.permalink, action.parent).then(function () {
-        PostsStore.emitChange();
+        RedditStore.emitChange();
       }).catch(function (err) {
         console.log('error getting comments!')
         console.log(err);
@@ -110,14 +110,14 @@ PostsStore.dispatchToken = Dispatcher.register(function(action) {
 -----------------------------------------------------------------------------*/
 
 function _refreshPostsFromSubreddit() {  
-  var url      = [PostsConstants.REDDIT_POST_API_PREFIX
+  var url      = [RedditConstants.REDDIT_POST_API_PREFIX
                  ,_storeData.subreddit
-                 ,PostsConstants.REDDIT_POST_API_POSTFIX
+                 ,RedditConstants.REDDIT_POST_API_POSTFIX
                  ,SettingsStore.getSettings().numPosts].join(''),
       deferred = Q.defer();
   
   _storeData.posts = [];
-  PostsStore.emitChange();
+  RedditStore.emitChange();
       
   $.get(url).done(function (res) {
     if (res.data && res.data.children && res.data.children.length > 0) {
@@ -147,7 +147,7 @@ function _refreshPostsFromSubreddit() {
  * @param {string} [parent]  The parent comment
  */
 function _refreshComments(permalink, parent) {
-  var url      = [PostsConstants.REDDIT_DOMAIN
+  var url      = [RedditConstants.REDDIT_DOMAIN
                  ,permalink].join(''),
       deferred = Q.defer();
   
@@ -156,12 +156,12 @@ function _refreshComments(permalink, parent) {
   }
   
   url += ['.json?limit='
-         ,PostsConstants.REDDIT_COMMENTS_LIMIT
+         ,RedditConstants.REDDIT_COMMENTS_LIMIT
          ,'&depth='
-         ,PostsConstants.REDDIT_COMMENTS_DEPTH].join('');
+         ,RedditConstants.REDDIT_COMMENTS_DEPTH].join('');
   
   _storeData.comments = [];
-  PostsStore.emitChange();
+  RedditStore.emitChange();
   
   $.get(url).done(function (res) {
     if (res && res.length && res[1] && res[1].data && res[1].data.children) {
@@ -182,4 +182,4 @@ function _setSubreddit(subreddit) {
   _storeData.subreddit = subreddit;
 }
 
-module.exports = PostsStore;
+module.exports = RedditStore;

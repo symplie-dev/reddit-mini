@@ -1,5 +1,5 @@
 var React           = require('react'),
-    PostsActions    = require('../../actions/posts'),
+    RedditActions   = require('../../actions/reddit'),
     SettingsActions = require('../../actions/settings'),
     SettingsStore   = require('../../stores/settings'),
     SubredditInput;
@@ -42,7 +42,7 @@ SubredditInput = React.createClass({
     var settings;
     
     if (evt.keyCode == 13 && evt.target.value.trim() !== '') {
-      PostsActions.setSubreddit(evt.target.value);
+      RedditActions.setSubreddit(evt.target.value);
       
       if (this.props.savePreviousSub) {
         settings = SettingsStore.getSettings();

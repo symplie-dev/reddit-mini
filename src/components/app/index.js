@@ -27,7 +27,7 @@ App = React.createClass({
     SlideContainerStore.addChangeListener(this._handleSlideContainerChange);
     // Initialize Stores
     SettingsStore.init().then(function (settings) {
-      if (settings.savePreviousSub && settings.previousSub) {
+      if (settings && settings.savePreviousSub && settings.previousSub) {
         PostsActions.setSubreddit(settings.previousSub);
       } else {
         PostsActions.setSubreddit('all');

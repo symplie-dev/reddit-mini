@@ -26,7 +26,7 @@ Comment = React.createClass({
         <div className='comment-meta'>
             <div className='comment-author'>{ this.props.comment.data.author }</div>
             <div className='comment-readable-time'>
-              <a href={this.props.permalink + this.props.comment.data.id}> { Util.getReadableTimePassed(this.props.comment.data.created_utc) }</a>
+              <a href={'https://www.reddit.com' + this.props.permalink + this.props.comment.data.id}> { Util.getReadableTimePassed(this.props.comment.data.created_utc) }</a>
             </div>
         </div>
         <div className='comment-body'>

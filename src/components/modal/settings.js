@@ -128,10 +128,12 @@ SettingsModal = React.createClass({
   _handleSavePreviousSubChange: function (evt) {
     var tmpSettings = this.state.tmpSettings;
     
-    tmpSettings.savePreviousSub = evt.target.checked;
-    this.setState({
-      tmpSettings: tmpSettings
-    });
+    if (tmpSettings) {
+      tmpSettings.savePreviousSub = evt.target.checked;
+      this.setState({
+        tmpSettings: tmpSettings
+      });
+    }
   }
 });
 

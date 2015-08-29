@@ -80,7 +80,7 @@ function _updateSettings(settings, subreddit) {
   var deferred = Q.defer(),
       self     = this;
   
-  if (settings.savePreviousSub && subreddit) {
+  if (settings && settings.savePreviousSub && subreddit) {
     settings.previousSub = subreddit;
   } else {
     settings.previousSub = null;

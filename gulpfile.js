@@ -44,11 +44,11 @@ gulp.task('js', function() {
   return browserify(path.JS_ENTRY)
     .transform(reactify)
     .bundle()
-    .pipe(source(path.OUT_JS))
+    .pipe(source(path.OUT_JS_MIN))
     .pipe(gulp.dest(path.DIST))
-    .pipe(rename(path.OUT_JS_MIN))
-    .pipe(streamify(uglify()))
-    .pipe(gulp.dest(path.DIST));
+    // .pipe(rename(path.OUT_JS_MIN))
+    // .pipe(streamify(uglify()))
+    // .pipe(gulp.dest(path.DIST));
 });
 
 // Watch CSS
@@ -70,7 +70,14 @@ gulp.task('trackingJs', function () {
     .pipe(rename(path.OUT_A_JS_MIN))
     .pipe(streamify(uglify()))
     .pipe(gulp.dest(path.DIST));
-})
+});
+
+// Minify the bunndled JS
+gulp.task('minifyJs', function () {
+  return gulp.src(Path.join(path.DIST, path.OUT_JS_MIN))
+    .pipe(streamify(uglify()))
+    .pipe(gulp.dest(path.DIST));
+});
 
 // Clean DIST
 gulp.task('clean', function () {
@@ -97,6 +104,7 @@ gulp.task('cleanNonMinifiedCss', function () {
 gulp.task('release', function () {
   runSequence('clean',
              ['less', 'js', 'trackingJs'],
+             'minifyJs',
              ['cleanNonMinifiedJs', 'cleanNonMinifiedTrackingJs', 'cleanNonMinifiedCss']);
 });
 

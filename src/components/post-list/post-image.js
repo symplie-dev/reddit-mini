@@ -20,7 +20,8 @@ PostImage = React.createClass({
   render: function () { 
     var img,
         playBtn,
-        video;
+        video,
+        previewSource = this.props.previewSource || 'img/placeholder-preview.png';
     
     
     if (this.props.type === 'IMAGE' && !this.props.previewSource) { // Static image
@@ -30,7 +31,7 @@ PostImage = React.createClass({
     } else if (this.props.type === 'IMAGE') { // Gif image
       if (!this.state.playingMedia) { // If media isn't already playing
         img = (
-          <img className='media-preview' src={ this.props.previewSource } onClick={ this._toggleMediaState } />
+          <img className='media-preview' src={ previewSource } onClick={ this._toggleMediaState } />
         );
         
         playBtn = (
@@ -52,7 +53,7 @@ PostImage = React.createClass({
     } else if (this.props.type === 'VIDEO') { // Gifv image
       if (!this.state.playingMedia) { // If media isn't already playing
         img = (
-          <img className='media-preview' src={ this.props.previewSource } onClick={ this._toggleMediaState } />
+          <img className='media-preview' src={ previewSource } onClick={ this._toggleMediaState } />
         );
         
         playBtn = (

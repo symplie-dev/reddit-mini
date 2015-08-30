@@ -9,7 +9,7 @@ MoreButton = React.createClass({
     
 	render: function () {
     return (
-      <a className='more-btn' href={ this.props.url }>{ this.props.numMore }&nbsp;more</a>
+      <a className='more-comments-btn' href={ this.props.url }>{ this.props.numMore }&nbsp;more</a>
     );
   }
 });

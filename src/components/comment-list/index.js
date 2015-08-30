@@ -18,7 +18,7 @@ Comment = React.createClass({
     
     if (this.props.comment.data && this.props.comment.data.replies &&
         this.props.comment.data.replies.data && this.props.comment.data.replies.data.children) {
-      children = (<CommentList comments={ this.props.comment.data.replies.data.children } permalink={ this.props.permalink } />);
+      children = (<CommentList comments={ this.props.comment.data.replies.data.children } permalink={ this.props.permalink } parentId={ this.props.comment.data.id } />);
     }
       
     return (
@@ -44,7 +44,8 @@ CommentList = React.createClass({
   propTypes: {
     comments:  React.PropTypes.array,
     post:      React.PropTypes.object,
-    permalink: React.PropTypes.string
+    permalink: React.PropTypes.string,
+    parentId:  React.PropTypes.string
   },
   
   getDefaultProps: function () {
@@ -72,11 +73,15 @@ CommentList = React.createClass({
         );
       }
       
+      console.log(this.props.comment);
+      
       this.props.comments.forEach(function (comment, index) {
+        var parentId = self.props.parentId || comment.data.parentId;
+        
         if (comment.kind.toLowerCase() === 't1') {
           comments.push(<li key={ index }><Comment comment={ comment } permalink={ self.props.permalink } /></li>);
         } else if (comment.kind.toLowerCase() === 'more' && comment.data.count > 0) {
-          comments.push(<li key={ index }><MoreButton numMore={ comment.data.count } url={'https://reddit.com' + self.props.permalink + comment.data.parent_id } /></li>);
+          comments.push(<li key={ index }><MoreButton numMore={ comment.data.count } url={ 'https://reddit.com' + self.props.permalink + parentId } /></li>);
         }
       });
     }

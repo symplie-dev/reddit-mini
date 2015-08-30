@@ -14,11 +14,11 @@ var assign          = require('object-assign'),
     RedditStore;
 
 _storeData = {
-  subreddit: 'all',
-  posts:     [],
-  error:     false,
-  comments:  [],
-  post:      {} // The post in context for the comments
+  subreddit:  'all', // The currently selected sub
+  posts:      [],    // Posts for a given sub
+  postsError: false, // True if there is an error fetching the posts for a sub
+  comments:   [],    // Comments for a given post
+  post:       {}     // The post in context for the comments
 };
 
 RedditStore = assign({}, EventEmitter.prototype, {
@@ -43,7 +43,7 @@ RedditStore = assign({}, EventEmitter.prototype, {
   },
   
   getPostsError: function () {
-    return _storeData.error;
+    return _storeData.postsError;
   },
   
   getComments: function () {
@@ -74,32 +74,33 @@ RedditStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
     case RedditConstants.ActionTypes.REFRESH_POSTS:
       _refreshPostsFromSubreddit().then(function () {
-        _storeData.error = false;
+        _storeData.postsError = false;
         RedditStore.emitChange();
-      }).catch(function() {
-        console.log('error getting posts');
-        _storeData.error = true;
+      }).catch(function(err) {
+        _storeData.postsError = true;
         RedditStore.emitChange();
       });
       break;
+      
     case RedditConstants.ActionTypes.SET_SUBREDDIT:
       _setSubreddit(action.subreddit);
       _refreshPostsFromSubreddit().then(function () {
-         _storeData.error = false;
+         _storeData.postsError = false;
         RedditStore.emitChange();
-      }).catch(function() {
-        _storeData.error = true;
+      }).catch(function(err) {
+        _storeData.postsError = true;
         RedditStore.emitChange();
       });
       break;
+      
     case RedditConstants.ActionTypes.REFRESH_COMMENTS:
       _refreshComments(action.permalink, action.parent).then(function () {
         RedditStore.emitChange();
       }).catch(function (err) {
-        console.log('error getting comments!')
         console.log(err);
       });
       break;
+      
     default:
       // no-op
       break;

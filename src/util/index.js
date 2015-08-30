@@ -1,4 +1,8 @@
-var Util = {
+var marked = require('marked'),
+    $      = require('jquery'),
+    Util;
+
+Util = {
   getReadableTimePassed: function (time) {
     var now  = Math.floor(Date.now() / 1000),
         diff = now - time,
@@ -97,6 +101,12 @@ var Util = {
     return post && post.preview && post.preview.images &&
     	post.preview.images[0] && post.preview.images[0].source &&
         post.preview.images[0].source.url;
+  },
+  
+  convertMarkdown: function (markdown) {
+    return {
+      __html: marked($('<textarea>').html(markdown).text())
+    }
   }
 };
 

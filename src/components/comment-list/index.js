@@ -20,7 +20,7 @@ Comment = React.createClass({
         this.props.comment.data.replies.data && this.props.comment.data.replies.data.children) {
       children = (<CommentList comments={ this.props.comment.data.replies.data.children } permalink={ this.props.permalink } parentId={ this.props.comment.data.id } />);
     }
-      
+    
     return (
       <div className='comment-container'>
         <div className='comment-meta'>
@@ -29,9 +29,7 @@ Comment = React.createClass({
               <a href={'https://www.reddit.com' + this.props.permalink + this.props.comment.data.id}> { Util.getReadableTimePassed(this.props.comment.data.created_utc) }</a>
             </div>
         </div>
-        <div className='comment-body'>
-          { this.props.comment.data.body }
-        </div>
+        <div className='comment-body markdown-body' dangerouslySetInnerHTML={ Util.convertMarkdown(this.props.comment.data.body) } />
           <ul>
             { children }
           </ul>
@@ -72,8 +70,6 @@ CommentList = React.createClass({
           <CommentsContext post={ this.props.post } />
         );
       }
-      
-      console.log(this.props.comment);
       
       this.props.comments.forEach(function (comment, index) {
         var parentId = self.props.parentId || comment.data.parentId;
